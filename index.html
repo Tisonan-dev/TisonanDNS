@@ -569,21 +569,31 @@
     },
     "outbounds": [
       {
-        "protocol": "hysteria2",
+        "protocol": "vless",
         "settings": {
-          "servers": [
+          "vnext": [
             {
               "address": "pahab-vernis-v-semnu.i-love-russia.online",
-              "port": 443
+              "port": 443,
+              "users": [
+                {
+                  "id": "b103c9a7-db2a-40a5-827f-c632f8eb0f82",
+                  "encryption": "none",
+                  "flow": "xtls-rprx-vision"
+                }
+              ]
             }
           ]
         },
         "streamSettings": {
-          "security": "tls",
-          "tlsSettings": {
+          "network": "tcp",
+          "tcpSettings": {},
+          "security": "reality",
+          "realitySettings": {
             "serverName": "pahab-vernis-v-semnu.i-love-russia.online",
-            "fingerprint": "firefox",
-            "alpn": ["h3"]
+            "publicKey": "Tm50a8xPW6cazNhgmTSHNbVfqaplvNSx0BQoJCGe3jU",
+            "shortId": "4aa753c327e7fd94",
+            "fingerprint": "firefox"
           }
         },
         "tag": "proxy"
