@@ -1,10 +1,475 @@
-# profile-title: TisonanDNS
-# profile-update-interval: 1
-#announce: Tisonan DNS - Brawl Stars VPN. Pick a relay closest to you.
-vless://b103c9a7-db2a-40a5-827f-c632f8eb0f82@pahab-vernis-v-semnu.i-love-russia.online:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=pahab-vernis-v-semnu.i-love-russia.online&fp=firefox&pbk=Tm50a8xPW6cazNhgmTSHNbVfqaplvNSx0BQoJCGe3jU&sid=4aa753c327e7fd94&spx=%2F&type=tcp&headerType=none#Best VPN: @TisonanVPN_bot
-vless://7f840958-faed-4236-b077-54909658cfaf@rudbl4.sky-vault.top:443?encryption=none&flow=xtls-rprx-vision&security=tls&sni=rudbl4.sky-vault.top&fp=firefox&alpn=h2%2Chttp%2F1.1&type=tcp&headerType=none#🇳🇱Для Telegram | WI-FI
-vless://16b6aea9-c2ee-4d43-9b5a-a852c69c523f@81.163.22.35:443?encryption=none&security=reality&sni=st.vk.com&fp=firefox&pbk=nRryf-5g2bY1ILCEJSWyXfU_1O3VIs5O7rJMqKciWQE&sid=821e5231b8&type=grpc&serviceName=#🇳🇱Для Telegram | LTE
-hysteria2://b103c9a7-db2a-40a5-827f-c632f8eb0f82@pahab-vernis-v-semnu.i-love-russia.online:443?insecure=0&alpn=h3&sni=pahab-vernis-v-semnu.i-love-russia.online&fp=firefox#🇩🇪Для игр Supersell #1
-vless://7f840958-faed-4236-b077-54909658cfaf@fr1.sky-vault.top:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=fr1.sky-vault.top&fp=firefox&pbk=_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0&sid=ae64c9b46bff174a&type=tcp&headerType=none#🇫🇷Для игр Supersell #2
-vless://6ea81e35-355f-46ff-a7db-4bc6fea14f71@94.103.2.49:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=dvq.mediastreamer.online&fp=firefox&pbk=gEf1YKYFHuyvxP18ayEA-egMMuh8qUSJCKOLthvGSiY&sid=ee4da6ffa5c9327b&spx=%2F&type=tcp&headerType=none#🇵🇱Для игр Supersell #3
-vless://7f840958-faed-4236-b077-54909658cfaf@ru2.sky-vault.top:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=ru2.sky-vault.top&fp=chrome&pbk=_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0&sid=ae64c9b46bff174a&type=tcp&headerType=none#🇷🇺Россия YouTube без рекламы
+{
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "1.0.0.1",
+      "8.8.8.8",
+      "8.8.4.4"
+    ],
+    "queryStrategy": "UseIP"
+  },
+  "log": {
+    "loglevel": "warning"
+  },
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "network": "tcp,udp",
+        "balancerTag": "auto"
+      }
+    ],
+    "balancers": [
+      {
+        "tag": "auto",
+        "selector": [
+          "proxy1",
+          "proxy2",
+          "proxy3",
+          "proxy4",
+          "proxy5",
+          "proxy6",
+          "proxy7",
+          "proxy8",
+          "proxy9",
+          "proxy10"
+        ],
+        "strategy": {
+          "type": "random"
+        },
+        "fallbackTag": "reserve"
+      }
+    ],
+    "domainMatcher": "hybrid",
+    "domainStrategy": "IPIfNonMatch"
+  },
+  "inbounds": [
+    {
+      "tag": "socks",
+      "port": 10808,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true,
+        "auth": "noauth"
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": false,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    },
+    {
+      "tag": "http",
+      "port": 10809,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "allowTransparent": false
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": false,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "proxy1",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "nl6.sky-vault.top",
+            "port": 8443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "xhttpSettings": {
+          "mode": "auto",
+          "host": "",
+          "path": "/path",
+          "extra": {
+            "xmux": {
+              "cMaxReuseTimes": 0,
+              "maxConcurrency": 24,
+              "maxConnections": 0,
+              "hKeepAlivePeriod": 0,
+              "hMaxRequestTimes": 750,
+              "hMaxReusableSecs": 2400
+            },
+            "headers": {
+              "Accept": "*/*",
+              "Referer": "https://vk.com/",
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            },
+            "noGRPCHeader": false,
+            "xPaddingBytes": "200-1200",
+            "scMaxEachPostBytes": 800000,
+            "scMinPostIntervalMs": 20,
+            "scStreamUpServerSecs": "30-60"
+          }
+        },
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "nl6.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy2",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "pl9.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "pl9.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy3",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "fr2.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "fr2.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy4",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tr1.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "tr1.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy5",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "de8.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "de8.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy6",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ee1.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "ee1.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy7",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "us3.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "us3.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy8",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "md6.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "md6.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy9",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "fl2.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "fl2.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "proxy10",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "kz5.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "kz5.sky-vault.top",
+          "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+          "shortId": "ae64c9b46bff174a",
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "tag": "reserve",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "rudbl6.sky-vault.top",
+            "port": 443,
+            "users": [
+              {
+                "id": "7f840958-faed-4236-b077-54909658cfaf",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "rudbl6.sky-vault.top",
+          "enableSessionResumption": false,
+          "fingerprint": "firefox",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ]
+        }
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ],
+  "observatory": {
+    "enabled": true,
+    "probeURL": "http://www.msftconnecttest.com/connecttest.txt",
+    "probeInterval": "3s",
+    "subjectSelector": [
+      "proxy1",
+      "proxy2",
+      "proxy3",
+      "proxy4",
+      "proxy5",
+      "proxy6",
+      "proxy7",
+      "proxy8",
+      "proxy9",
+      "proxy10"
+    ]
+  },
+  "remarks": "🇪🇺 Авто-выбор",
+  "meta": {
+    "serverDescription": "Автоматический выбор лучшего сервера из 10 доступных"
+  }
+}
