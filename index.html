@@ -475,6 +475,341 @@
     }
   },
   {
+    "dns": {
+      "servers": [
+        "1.1.1.1",
+        "1.0.0.1",
+        "8.8.8.8",
+        "8.8.4.4"
+      ],
+      "queryStrategy": "UseIP"
+    },
+    "log": {
+      "loglevel": "warning"
+    },
+    "routing": {
+      "rules": [
+        {
+          "type": "field",
+          "network": "tcp,udp",
+          "balancerTag": "auto"
+        }
+      ],
+      "balancers": [
+        {
+          "tag": "auto",
+          "selector": [
+            "proxy1",
+            "proxy2",
+            "proxy3",
+            "proxy4",
+            "proxy5",
+            "proxy6"
+          ],
+          "strategy": {
+            "type": "random"
+          },
+          "fallbackTag": "reserve"
+        }
+      ],
+      "domainMatcher": "hybrid",
+      "domainStrategy": "IPIfNonMatch"
+    },
+    "inbounds": [
+      {
+        "tag": "socks",
+        "port": 10808,
+        "listen": "127.0.0.1",
+        "protocol": "socks",
+        "settings": {
+          "udp": true,
+          "auth": "noauth"
+        },
+        "sniffing": {
+          "enabled": true,
+          "routeOnly": false,
+          "destOverride": [
+            "http",
+            "tls",
+            "quic"
+          ]
+        }
+      },
+      {
+        "tag": "http",
+        "port": 10809,
+        "listen": "127.0.0.1",
+        "protocol": "http",
+        "settings": {
+          "allowTransparent": false
+        },
+        "sniffing": {
+          "enabled": true,
+          "routeOnly": false,
+          "destOverride": [
+            "http",
+            "tls",
+            "quic"
+          ]
+        }
+      }
+    ],
+    "outbounds": [
+      {
+        "tag": "proxy1",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "46.182.24.134",
+              "port": 443,
+              "users": [
+                {
+                  "id": "a2fbf1a9-69cb-423f-a411-0763418b26b5",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": ""
+          },
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "ffastt.stackline.online",
+            "publicKey": "U_RH8LY7kXgcjvMCpH3Q0tebDcFZA7Xm7fh7-xOeUkM",
+            "shortId": "6186",
+            "fingerprint": "firefox"
+          }
+        }
+      },
+      {
+        "tag": "proxy2",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "46.182.24.134",
+              "port": 443,
+              "users": [
+                {
+                  "id": "a2fbf1a9-69cb-423f-a411-0763418b26b5",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": ""
+          },
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "ffastt.stackline.online",
+            "publicKey": "U_RH8LY7kXgcjvMCpH3Q0tebDcFZA7Xm7fh7-xOeUkM",
+            "shortId": "325d4c00854f1c12",
+            "fingerprint": "firefox"
+          }
+        }
+      },
+      {
+        "tag": "proxy3",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "46.182.24.134",
+              "port": 443,
+              "users": [
+                {
+                  "id": "a2fbf1a9-69cb-423f-a411-0763418b26b5",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": ""
+          },
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "ffastt.stackline.online",
+            "publicKey": "U_RH8LY7kXgcjvMCpH3Q0tebDcFZA7Xm7fh7-xOeUkM",
+            "shortId": "b5b8f366c26dc6",
+            "fingerprint": "firefox"
+          }
+        }
+      },
+      {
+        "tag": "proxy4",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "81.163.22.35",
+              "port": 443,
+              "users": [
+                {
+                  "id": "16b6aea9-c2ee-4d43-9b5a-a852c69c523f",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": ""
+          },
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "st.vk.com",
+            "publicKey": "nRryf-5g2bY1ILCEJSWyXfU_1O3VIs5O7rJMqKciWQE",
+            "shortId": "821e5231b8",
+            "fingerprint": "firefox"
+          }
+        }
+      },
+      {
+        "tag": "proxy5",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "81.163.22.35",
+              "port": 443,
+              "users": [
+                {
+                  "id": "16b6aea9-c2ee-4d43-9b5a-a852c69c523f",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": ""
+          },
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "music.yandex.ru",
+            "publicKey": "nRryf-5g2bY1ILCEJSWyXfU_1O3VIs5O7rJMqKciWQE",
+            "shortId": "821e5231b8",
+            "fingerprint": "firefox"
+          }
+        }
+      },
+      {
+        "tag": "proxy6",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "81.163.22.35",
+              "port": 443,
+              "users": [
+                {
+                  "id": "16b6aea9-c2ee-4d43-9b5a-a852c69c523f",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": ""
+          },
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "max.ru",
+            "publicKey": "nRryf-5g2bY1ILCEJSWyXfU_1O3VIs5O7rJMqKciWQE",
+            "shortId": "61d5ef84",
+            "fingerprint": "firefox"
+          }
+        }
+      },
+      {
+        "tag": "reserve",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "rudbl6.sky-vault.top",
+              "port": 443,
+              "users": [
+                {
+                  "id": "7f840958-faed-4236-b077-54909658cfaf",
+                  "encryption": "none",
+                  "flow": "xtls-rprx-vision"
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "tcp",
+          "tcpSettings": {},
+          "security": "tls",
+          "tlsSettings": {
+            "serverName": "rudbl6.sky-vault.top",
+            "enableSessionResumption": false,
+            "fingerprint": "firefox",
+            "alpn": [
+              "h2",
+              "http/1.1"
+            ]
+          }
+        }
+      },
+      {
+        "tag": "direct",
+        "protocol": "freedom",
+        "settings": {}
+      },
+      {
+        "tag": "block",
+        "protocol": "blackhole",
+        "settings": {}
+      }
+    ],
+    "observatory": {
+      "enabled": true,
+      "probeURL": "http://www.msftconnecttest.com/connecttest.txt",
+      "probeInterval": "3s",
+      "subjectSelector": [
+        "proxy1",
+        "proxy2",
+        "proxy3",
+        "proxy4",
+        "proxy5",
+        "proxy6"
+      ]
+    },
+    "remarks": "🇪🇺Авто-выбор | LTE",
+    "meta": {
+      "serverDescription": "Автоматический выбор лучшего сервера из 6 доступных"
+    }
+  },
+  {
     "remarks": "🇳🇱Для Telegram | LTE",
     "meta": {
       "serverDescription": "Нидерланды"
