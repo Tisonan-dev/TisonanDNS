@@ -469,7 +469,7 @@
         "proxy10"
       ]
     },
-    "remarks": "🇸🇴Авто-выбор | WI-FI",
+    "remarks": "🇸🇴Для Telegram #1 | WI-FI",
     "meta": {
       "serverDescription": "Автоматический выбор лучшего сервера"
     }
@@ -715,9 +715,9 @@
         "proxy4"
       ]
     },
-    "remarks": "🇪🇺Авто-выбор | LTE",
+    "remarks": "🇸🇴Для Telegram #2 | WI-FI",
     "meta": {
-      "serverDescription": "Автоматический выбор лучшего сервера из 4 доступных"
+      "serverDescription": "Автоматический выбор лучшего сервера"
     }
   },
   {
@@ -1355,5 +1355,110 @@
         "poolSize": 65535
       }
     ]
+  },
+  {
+    "dns": {
+      "servers": [
+        "1.1.1.1",
+        "1.0.0.1"
+      ],
+      "queryStrategy": "UseIP"
+    },
+    "routing": {
+      "rules": [
+        {
+          "type": "field",
+          "protocol": [
+            "bittorrent"
+          ],
+          "outboundTag": "direct"
+        }
+      ],
+      "domainMatcher": "hybrid",
+      "domainStrategy": "IPIfNonMatch"
+    },
+    "inbounds": [
+      {
+        "tag": "socks",
+        "port": 10808,
+        "listen": "127.0.0.1",
+        "protocol": "socks",
+        "settings": {
+          "udp": true,
+          "auth": "noauth"
+        },
+        "sniffing": {
+          "enabled": true,
+          "routeOnly": false,
+          "destOverride": [
+            "http",
+            "tls",
+            "quic"
+          ]
+        }
+      },
+      {
+        "tag": "http",
+        "port": 10809,
+        "listen": "127.0.0.1",
+        "protocol": "http",
+        "settings": {
+          "allowTransparent": false
+        },
+        "sniffing": {
+          "enabled": true,
+          "routeOnly": false,
+          "destOverride": [
+            "http",
+            "tls",
+            "quic"
+          ]
+        }
+      }
+    ],
+    "outbounds": [
+      {
+        "tag": "proxy",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "kz3.sky-vault.top",
+              "port": 443,
+              "users": [
+                {
+                  "id": "7f840958-faed-4236-b077-54909658cfaf",
+                  "encryption": "none",
+                  "flow": "xtls-rprx-vision"
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "tcp",
+          "tcpSettings": {},
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "kz3.sky-vault.top",
+            "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
+            "shortId": "ae64c9b46bff174a",
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      {
+        "tag": "direct",
+        "protocol": "freedom"
+      },
+      {
+        "tag": "block",
+        "protocol": "blackhole"
+      }
+    ],
+    "remarks": "🇰🇿YouTube без рекламы",
+    "meta": {
+      "serverDescription": "Казахстан"
+    }
   }
 ]
