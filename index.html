@@ -721,142 +721,222 @@
     }
   },
   {
-    "remarks": "🇩🇪Для игр Supercell #1",
+    "remarks": "🇷🇺Для игр Supercell #1",
     "meta": {
-      "serverDescription": "Германия (игровой)"
+      "serverDescription": "Москва 9"
     },
+    "dns": {
+      "servers": [
+        {
+          "address": "fakedns",
+          "domains": [
+            "domain:accounts.google.com",
+            "domain:apple.com",
+            "domain:appleid.apple.com",
+            "domain:bsto.supercell.com",
+            "domain:facebook.com",
+            "domain:fbcdn.net",
+            "domain:google.com",
+            "domain:googleapis.com",
+            "domain:gstatic.com",
+            "domain:oauth2.googleapis.com",
+            "domain:play.googleapis.com",
+            "domain:supercell.com",
+            "domain:supercell.io",
+            "domain:supercell.net",
+            "domain:supercellgames.com",
+            "domain:supercellid.com",
+            "keyword:brawlstars",
+            "keyword:supercell",
+            "regexp:.*supercell.*"
+          ]
+        },
+        "https://keystroke.luparadio.ru/Kq3SWSEC_-doT_H-/dns-query"
+      ],
+      "queryStrategy": "UseIP",
+      "hosts": {
+        "keystroke.luparadio.ru": "157.173.27.169",
+        "verse.muzhik-v-ochkah.ru": "135.106.146.140"
+      }
+    },
+    "routing": {
+      "rules": [
+        {
+          "type": "field",
+          "port": "53",
+          "outboundTag": "dns-out"
+        },
+        {
+          "type": "field",
+          "port": "853",
+          "network": "tcp,udp",
+          "outboundTag": "block"
+        },
+        {
+          "type": "field",
+          "protocol": [
+            "bittorrent"
+          ],
+          "outboundTag": "block"
+        }
+      ],
+      "domainMatcher": "hybrid",
+      "domainStrategy": "IPIfNonMatch"
+    },
+    "inbounds": [
+      {
+        "tag": "socks",
+        "port": 10808,
+        "listen": "127.0.0.1",
+        "protocol": "socks",
+        "settings": {
+          "udp": true,
+          "auth": "noauth"
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": [
+            "fakedns",
+            "http",
+            "tls",
+            "quic"
+          ],
+          "metadataOnly": false,
+          "routeOnly": false
+        }
+      },
+      {
+        "tag": "http",
+        "port": 10809,
+        "listen": "127.0.0.1",
+        "protocol": "http",
+        "settings": {
+          "allowTransparent": false
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": [
+            "fakedns",
+            "http",
+            "tls",
+            "quic"
+          ],
+          "metadataOnly": false,
+          "routeOnly": false
+        }
+      }
+    ],
     "outbounds": [
       {
         "tag": "proxy",
-        "protocol": "vless",
+        "protocol": "hysteria",
         "settings": {
-          "vnext": [
-            {
-              "address": "de8.sky-vault.top",
-              "port": 443,
-              "users": [
-                {
-                  "id": "7f840958-faed-4236-b077-54909658cfaf",
-                  "encryption": "none",
-                  "flow": "xtls-rprx-vision"
-                }
-              ]
-            }
-          ]
+          "address": "verse.muzhik-v-ochkah.ru",
+          "port": 443,
+          "version": 2
         },
         "streamSettings": {
-          "network": "tcp",
-          "tcpSettings": {},
-          "security": "reality",
-          "realitySettings": {
-            "serverName": "de8.sky-vault.top",
-            "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
-            "shortId": "ae64c9b46bff174a",
-            "fingerprint": "firefox"
+          "network": "hysteria",
+          "hysteriaSettings": {
+            "version": 2,
+            "auth": "1ac290b4-66e7-46d5-8e4a-3de735611788"
+          },
+          "security": "tls",
+          "tlsSettings": {
+            "serverName": "verse.muzhik-v-ochkah.ru",
+            "fingerprint": "chrome",
+            "alpn": [
+              "h3"
+            ]
+          },
+          "finalmask": {
+            "quicParams": {
+              "udpHop": {
+                "ports": "20000-32000",
+                "interval": "30"
+              }
+            }
           }
-        }
-      }
-    ],
-    "dns": {
-      "servers": [
-        "1.1.1.1",
-        "1.0.0.1"
-      ],
-      "queryStrategy": "UseIP"
-    },
-    "routing": {
-      "rules": [
-        {
-          "type": "field",
-          "protocol": ["bittorrent"],
-          "outboundTag": "direct"
-        }
-      ],
-      "domainMatcher": "hybrid",
-      "domainStrategy": "IPIfNonMatch"
-    },
-    "inbounds": [
-      {
-        "tag": "socks",
-        "port": 10808,
-        "listen": "127.0.0.1",
-        "protocol": "socks",
-        "settings": {
-          "udp": true,
-          "auth": "noauth"
-        },
-        "sniffing": {
-          "enabled": true,
-          "routeOnly": false,
-          "destOverride": ["http", "tls", "quic"]
         }
       },
       {
-        "tag": "http",
-        "port": 10809,
-        "listen": "127.0.0.1",
-        "protocol": "http",
-        "settings": {
-          "allowTransparent": false
-        },
-        "sniffing": {
-          "enabled": true,
-          "routeOnly": false,
-          "destOverride": ["http", "tls", "quic"]
-        }
+        "tag": "direct",
+        "protocol": "freedom"
+      },
+      {
+        "tag": "block",
+        "protocol": "blackhole"
+      },
+      {
+        "protocol": "dns",
+        "tag": "dns-out"
+      }
+    ],
+    "fakedns": [
+      {
+        "ipPool": "198.18.0.0/15",
+        "poolSize": 65535
       }
     ]
   },
   {
-    "remarks": "🇫🇷Для игр Supercell #2",
+    "remarks": "🇷🇺Для игр Supercell #2",
     "meta": {
-      "serverDescription": "Франция"
+      "serverDescription": "Екатеринбург"
     },
-    "outbounds": [
-      {
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "fr1.sky-vault.top",
-              "port": 443,
-              "users": [
-                {
-                  "id": "7f840958-faed-4236-b077-54909658cfaf",
-                  "encryption": "none",
-                  "flow": "xtls-rprx-vision"
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "tcp",
-          "tcpSettings": {},
-          "security": "reality",
-          "realitySettings": {
-            "serverName": "fr1.sky-vault.top",
-            "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
-            "shortId": "ae64c9b46bff174a",
-            "fingerprint": "firefox"
-          }
-        },
-        "tag": "proxy"
-      }
-    ],
     "dns": {
       "servers": [
-        "1.1.1.1",
-        "1.0.0.1"
+        {
+          "address": "fakedns",
+          "domains": [
+            "domain:accounts.google.com",
+            "domain:apple.com",
+            "domain:appleid.apple.com",
+            "domain:bsto.supercell.com",
+            "domain:facebook.com",
+            "domain:fbcdn.net",
+            "domain:google.com",
+            "domain:googleapis.com",
+            "domain:gstatic.com",
+            "domain:oauth2.googleapis.com",
+            "domain:play.googleapis.com",
+            "domain:supercell.com",
+            "domain:supercell.io",
+            "domain:supercell.net",
+            "domain:supercellgames.com",
+            "domain:supercellid.com",
+            "keyword:brawlstars",
+            "keyword:supercell",
+            "regexp:.*supercell.*"
+          ]
+        },
+        "https://keystroke.luparadio.ru/Kq3SWSEC_-doT_H-/dns-query"
       ],
-      "queryStrategy": "UseIP"
+      "queryStrategy": "UseIP",
+      "hosts": {
+        "keystroke.luparadio.ru": "157.173.27.169",
+        "sonata.muzhik-v-ochkah.ru": "45.153.230.64"
+      }
     },
     "routing": {
       "rules": [
         {
           "type": "field",
-          "protocol": ["bittorrent"],
-          "outboundTag": "direct"
+          "port": "53",
+          "outboundTag": "dns-out"
+        },
+        {
+          "type": "field",
+          "port": "853",
+          "network": "tcp,udp",
+          "outboundTag": "block"
+        },
+        {
+          "type": "field",
+          "protocol": [
+            "bittorrent"
+          ],
+          "outboundTag": "block"
         }
       ],
       "domainMatcher": "hybrid",
@@ -874,8 +954,14 @@
         },
         "sniffing": {
           "enabled": true,
-          "routeOnly": false,
-          "destOverride": ["http", "tls", "quic"]
+          "destOverride": [
+            "fakedns",
+            "http",
+            "tls",
+            "quic"
+          ],
+          "metadataOnly": false,
+          "routeOnly": false
         }
       },
       {
@@ -888,62 +974,128 @@
         },
         "sniffing": {
           "enabled": true,
-          "routeOnly": false,
-          "destOverride": ["http", "tls", "quic"]
+          "destOverride": [
+            "fakedns",
+            "http",
+            "tls",
+            "quic"
+          ],
+          "metadataOnly": false,
+          "routeOnly": false
         }
+      }
+    ],
+    "outbounds": [
+      {
+        "tag": "proxy",
+        "protocol": "hysteria",
+        "settings": {
+          "address": "sonata.muzhik-v-ochkah.ru",
+          "port": 443,
+          "version": 2
+        },
+        "streamSettings": {
+          "network": "hysteria",
+          "hysteriaSettings": {
+            "version": 2,
+            "auth": "1ac290b4-66e7-46d5-8e4a-3de735611788"
+          },
+          "security": "tls",
+          "tlsSettings": {
+            "serverName": "sonata.muzhik-v-ochkah.ru",
+            "fingerprint": "chrome",
+            "alpn": [
+              "h3"
+            ]
+          },
+          "finalmask": {
+            "quicParams": {
+              "udpHop": {
+                "ports": "20000-32000",
+                "interval": "30"
+              }
+            }
+          }
+        }
+      },
+      {
+        "tag": "direct",
+        "protocol": "freedom"
+      },
+      {
+        "tag": "block",
+        "protocol": "blackhole"
+      },
+      {
+        "protocol": "dns",
+        "tag": "dns-out"
+      }
+    ],
+    "fakedns": [
+      {
+        "ipPool": "198.18.0.0/15",
+        "poolSize": 65535
       }
     ]
   },
   {
-    "remarks": "🇵🇱Для игр Supercell #3",
+    "remarks": "🇷🇺Для игр Supercell #3",
     "meta": {
-      "serverDescription": "Польша"
+      "serverDescription": "Краснодар 1"
     },
-    "outbounds": [
-      {
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "94.103.2.49",
-              "port": 443,
-              "users": [
-                {
-                  "id": "6ea81e35-355f-46ff-a7db-4bc6fea14f71",
-                  "encryption": "none",
-                  "flow": "xtls-rprx-vision"
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "tcp",
-          "tcpSettings": {},
-          "security": "reality",
-          "realitySettings": {
-            "serverName": "dvq.mediastreamer.online",
-            "publicKey": "gEf1YKYFHuyvxP18ayEA-egMMuh8qUSJCKOLthvGSiY",
-            "shortId": "ee4da6ffa5c9327b",
-            "fingerprint": "firefox"
-          }
-        },
-        "tag": "proxy"
-      }
-    ],
     "dns": {
       "servers": [
-        "1.1.1.1",
-        "1.0.0.1"
+        {
+          "address": "fakedns",
+          "domains": [
+            "domain:accounts.google.com",
+            "domain:apple.com",
+            "domain:appleid.apple.com",
+            "domain:bsto.supercell.com",
+            "domain:facebook.com",
+            "domain:fbcdn.net",
+            "domain:google.com",
+            "domain:googleapis.com",
+            "domain:gstatic.com",
+            "domain:oauth2.googleapis.com",
+            "domain:play.googleapis.com",
+            "domain:supercell.com",
+            "domain:supercell.io",
+            "domain:supercell.net",
+            "domain:supercellgames.com",
+            "domain:supercellid.com",
+            "keyword:brawlstars",
+            "keyword:supercell",
+            "regexp:.*supercell.*"
+          ]
+        },
+        "https://keystroke.luparadio.ru/Kq3SWSEC_-doT_H-/dns-query"
       ],
-      "queryStrategy": "UseIP"
+      "queryStrategy": "UseIP",
+      "hosts": {
+        "keystroke.luparadio.ru": "157.173.27.169",
+        "chorus.muzhik-v-ochkah.ru": "193.124.121.72"
+      }
     },
     "routing": {
       "rules": [
         {
           "type": "field",
-          "protocol": ["bittorrent"],
-          "outboundTag": "direct"
+          "port": "53",
+          "outboundTag": "dns-out"
+        },
+        {
+          "type": "field",
+          "port": "853",
+          "network": "tcp,udp",
+          "outboundTag": "block"
+        },
+        {
+          "type": "field",
+          "protocol": [
+            "bittorrent"
+          ],
+          "outboundTag": "block"
         }
       ],
       "domainMatcher": "hybrid",
@@ -961,8 +1113,14 @@
         },
         "sniffing": {
           "enabled": true,
-          "routeOnly": false,
-          "destOverride": ["http", "tls", "quic"]
+          "destOverride": [
+            "fakedns",
+            "http",
+            "tls",
+            "quic"
+          ],
+          "metadataOnly": false,
+          "routeOnly": false
         }
       },
       {
@@ -975,62 +1133,128 @@
         },
         "sniffing": {
           "enabled": true,
-          "routeOnly": false,
-          "destOverride": ["http", "tls", "quic"]
+          "destOverride": [
+            "fakedns",
+            "http",
+            "tls",
+            "quic"
+          ],
+          "metadataOnly": false,
+          "routeOnly": false
         }
+      }
+    ],
+    "outbounds": [
+      {
+        "tag": "proxy",
+        "protocol": "hysteria",
+        "settings": {
+          "address": "chorus.muzhik-v-ochkah.ru",
+          "port": 443,
+          "version": 2
+        },
+        "streamSettings": {
+          "network": "hysteria",
+          "hysteriaSettings": {
+            "version": 2,
+            "auth": "1ac290b4-66e7-46d5-8e4a-3de735611788"
+          },
+          "security": "tls",
+          "tlsSettings": {
+            "serverName": "chorus.muzhik-v-ochkah.ru",
+            "fingerprint": "chrome",
+            "alpn": [
+              "h3"
+            ]
+          },
+          "finalmask": {
+            "quicParams": {
+              "udpHop": {
+                "ports": "20000-32000",
+                "interval": "30"
+              }
+            }
+          }
+        }
+      },
+      {
+        "tag": "direct",
+        "protocol": "freedom"
+      },
+      {
+        "tag": "block",
+        "protocol": "blackhole"
+      },
+      {
+        "protocol": "dns",
+        "tag": "dns-out"
+      }
+    ],
+    "fakedns": [
+      {
+        "ipPool": "198.18.0.0/15",
+        "poolSize": 65535
       }
     ]
   },
   {
-    "remarks": "🇷🇺Россия YouTube без рекламы",
+    "remarks": "🇷🇺Для игр Supercell #4",
     "meta": {
-      "serverDescription": "Россия"
+      "serverDescription": "Краснодар 2"
     },
-    "outbounds": [
-      {
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "ru2.sky-vault.top",
-              "port": 443,
-              "users": [
-                {
-                  "id": "7f840958-faed-4236-b077-54909658cfaf",
-                  "encryption": "none",
-                  "flow": "xtls-rprx-vision"
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "tcp",
-          "tcpSettings": {},
-          "security": "reality",
-          "realitySettings": {
-            "serverName": "ru2.sky-vault.top",
-            "publicKey": "_KTsOFhGnC0W28ZqO8_FApozMp7tJ9cVBTLKLAA_OR0",
-            "shortId": "ae64c9b46bff174a",
-            "fingerprint": "chrome"
-          }
-        },
-        "tag": "proxy"
-      }
-    ],
     "dns": {
       "servers": [
-        "1.1.1.1",
-        "1.0.0.1"
+        {
+          "address": "fakedns",
+          "domains": [
+            "domain:accounts.google.com",
+            "domain:apple.com",
+            "domain:appleid.apple.com",
+            "domain:bsto.supercell.com",
+            "domain:facebook.com",
+            "domain:fbcdn.net",
+            "domain:google.com",
+            "domain:googleapis.com",
+            "domain:gstatic.com",
+            "domain:oauth2.googleapis.com",
+            "domain:play.googleapis.com",
+            "domain:supercell.com",
+            "domain:supercell.io",
+            "domain:supercell.net",
+            "domain:supercellgames.com",
+            "domain:supercellid.com",
+            "keyword:brawlstars",
+            "keyword:supercell",
+            "regexp:.*supercell.*"
+          ]
+        },
+        "https://keystroke.luparadio.ru/Kq3SWSEC_-doT_H-/dns-query"
       ],
-      "queryStrategy": "UseIP"
+      "queryStrategy": "UseIP",
+      "hosts": {
+        "keystroke.luparadio.ru": "157.173.27.169",
+        "chorus.muzhik-v-ochkah.ru": "193.124.121.72"
+      }
     },
     "routing": {
       "rules": [
         {
           "type": "field",
-          "protocol": ["bittorrent"],
-          "outboundTag": "direct"
+          "port": "53",
+          "outboundTag": "dns-out"
+        },
+        {
+          "type": "field",
+          "port": "853",
+          "network": "tcp,udp",
+          "outboundTag": "block"
+        },
+        {
+          "type": "field",
+          "protocol": [
+            "bittorrent"
+          ],
+          "outboundTag": "block"
         }
       ],
       "domainMatcher": "hybrid",
@@ -1048,8 +1272,14 @@
         },
         "sniffing": {
           "enabled": true,
-          "routeOnly": false,
-          "destOverride": ["http", "tls", "quic"]
+          "destOverride": [
+            "fakedns",
+            "http",
+            "tls",
+            "quic"
+          ],
+          "metadataOnly": false,
+          "routeOnly": false
         }
       },
       {
@@ -1062,9 +1292,67 @@
         },
         "sniffing": {
           "enabled": true,
-          "routeOnly": false,
-          "destOverride": ["http", "tls", "quic"]
+          "destOverride": [
+            "fakedns",
+            "http",
+            "tls",
+            "quic"
+          ],
+          "metadataOnly": false,
+          "routeOnly": false
         }
+      }
+    ],
+    "outbounds": [
+      {
+        "tag": "proxy",
+        "protocol": "hysteria",
+        "settings": {
+          "address": "chorus.muzhik-v-ochkah.ru",
+          "port": 443,
+          "version": 2
+        },
+        "streamSettings": {
+          "network": "hysteria",
+          "hysteriaSettings": {
+            "version": 2,
+            "auth": "1ac290b4-66e7-46d5-8e4a-3de735611788"
+          },
+          "security": "tls",
+          "tlsSettings": {
+            "serverName": "chorus.muzhik-v-ochkah.ru",
+            "fingerprint": "chrome",
+            "alpn": [
+              "h3"
+            ]
+          },
+          "finalmask": {
+            "quicParams": {
+              "udpHop": {
+                "ports": "20000-32000",
+                "interval": "30"
+              }
+            }
+          }
+        }
+      },
+      {
+        "tag": "direct",
+        "protocol": "freedom"
+      },
+      {
+        "tag": "block",
+        "protocol": "blackhole"
+      },
+      {
+        "protocol": "dns",
+        "tag": "dns-out"
+      }
+    ],
+    "fakedns": [
+      {
+        "ipPool": "198.18.0.0/15",
+        "poolSize": 65535
       }
     ]
   }
